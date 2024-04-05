@@ -1,12 +1,28 @@
+import { GameInfoComponent } from './../game-info/game-info.component';
+import { DialogAddPlayerComponent } from './../dialog-add-player/dialog-add-player.component';
 import { Game } from './../models/game';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { PlayerComponent } from '../player/player.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [CommonModule, PlayerComponent],
+  imports: [
+    CommonModule,
+    PlayerComponent,
+    MatButtonModule,
+    MatInputModule,
+    MatIconModule,
+    DialogAddPlayerComponent,
+    MatDialogModule,
+    GameInfoComponent,
+  ],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss',
 })
@@ -15,7 +31,7 @@ export class GameComponent implements OnInit {
   game: Game;
   currentCard: string = '';
 
-  constructor() {}
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.newGame();
@@ -26,12 +42,12 @@ export class GameComponent implements OnInit {
       this.currentCard = this.game.stack.pop()!;
       console.log('New Card', this.currentCard);
       this.pickCardAnimation = true;
-
-      console.log('played Card', this.game.playedCards)
+      this.pickNextPlayer();
+      console.log('played Card', this.game.playedCards);
       setTimeout(() => {
         this.pickCardAnimation = false;
         this.pushPickedCards(this.currentCard);
-      }, 1250);
+      }, 1200);
     }
   }
 
@@ -40,7 +56,20 @@ export class GameComponent implements OnInit {
     console.log(this.game);
   }
 
-  pushPickedCards(currentCard: string){
-    this.game.playedCards.push(currentCard)
+  pushPickedCards(currentCard: string) {
+    this.game.playedCards.push(currentCard);
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogAddPlayerComponent);
+
+    dialogRef.afterClosed().subscribe((name: string) => {
+      this.game.players.push(name);
+    });
+  }
+
+  pickNextPlayer(){
+    this.game.currentPlayer++
+    this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
   }
 }

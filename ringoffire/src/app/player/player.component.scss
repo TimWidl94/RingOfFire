@@ -12,9 +12,13 @@ div{
     margin-left: 16px;
   }
   >img{
-    max-width: 100px;
+    max-width: 50px;
     height: auto;
     object-fit: cover;
     border-radius: 100%;
   }
+}
+
+.playerActive{
+  background-color: rgb(192, 192, 192) !important;
 }
