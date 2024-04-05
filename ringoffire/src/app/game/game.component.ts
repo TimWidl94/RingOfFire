@@ -7,8 +7,8 @@ import { PlayerComponent } from '../player/player.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatDialog} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-game',
@@ -64,12 +64,15 @@ export class GameComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogAddPlayerComponent);
 
     dialogRef.afterClosed().subscribe((name: string) => {
-      this.game.players.push(name);
+      if (name && name.length >= 0) {
+        this.game.players.push(name);
+      }
     });
   }
 
-  pickNextPlayer(){
-    this.game.currentPlayer++
-    this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+  pickNextPlayer() {
+    this.game.currentPlayer++;
+    this.game.currentPlayer =
+      this.game.currentPlayer % this.game.players.length;
   }
 }

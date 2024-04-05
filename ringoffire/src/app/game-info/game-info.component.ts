@@ -44,7 +44,7 @@ export class GameInfoComponent implements OnInit, OnChanges {
     {
       title: 'Never have i ever...',
       description:
-        'Say something you nnever did. Everyone who did it has to drink.',
+        'Say something you never did. Everyone who did it has to drink.',
     },
     {
       title: 'Rule',
