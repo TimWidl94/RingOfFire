@@ -1,3 +1,5 @@
+
+
 export class Game {
   public players: string[] = [];
   public stack: string[] = [];
@@ -15,12 +17,12 @@ export class Game {
   }
 
   // public toJson() {
-  //   return {
-  //     players: this.players,
-  //     stack: this.stack,
-  //     playedCards: this.playedCards,
-  //     currentPlayer: this.currentPlayer,
-  //   };
+    // return {
+      // players: this.players,
+      // stack: this.stack,
+      // playedCards: this.playedCards,
+      // currentPlayer: this.currentPlayer,
+    // };
   // }
 
   shuffle(array: string[]) {

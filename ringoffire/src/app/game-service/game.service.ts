@@ -21,7 +21,7 @@ import { isNgTemplate } from '@angular/compiler';
 })
 export class GameService {
   game: Game[] = [];
-  gameObject: Game;
+
 
 
   unsubGame;
@@ -33,7 +33,6 @@ export class GameService {
     this.unsubGame = this.subGameList();
   }
 
-  // const itemCollection = collection(this.firestore, 'items');
 
   ngonDestroy() {
     this.subGameList();
@@ -45,10 +44,11 @@ export class GameService {
       list.forEach((element) => {
         this.game.push(this.setGameObject(element.data(), element.id));
       });
+      console.log(this.game);
     });
   }
 
-  setGameObject(obj: Game, id: string): Game {
+  setGameObject(obj: any, id: string): Game {
     return {
       players: obj.players,
       stack: obj.stack,

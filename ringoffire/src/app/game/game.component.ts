@@ -9,12 +9,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
-import { Firestore, collection, onSnapshot, } from '@angular/fire/firestore';
+import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
 })
-
 @Component({
   selector: 'app-game',
   standalone: true,
@@ -35,38 +34,12 @@ export class GameComponent implements OnInit {
   pickCardAnimation = false;
   game: Game;
   currentCard: string = '';
-  gameDates: Game[] = [];
 
-
-  firestore: Firestore = inject(Firestore);
-
-  unsubGame;
-
-
-  constructor(public dialog: MatDialog, private gameObject: Game) {
-  this.unsubGame = this.gameData();
-  }
-
-  ngonDestroy(){
-    this.unsubGame();
-  }
+  constructor(public dialog: MatDialog, ) {}
 
   ngOnInit(): void {
     this.newGame();
   }
-
-  gameData() {
-    return onSnapshot(this.getGameRef(), (list) => {
-      list.forEach((element) => {
-        console.log(element)
-      });
-    });
-  }
-
-  getGameRef() {
-    return collection(this.firestore, 'games');
-  }
-
 
   takeCard() {
     if (!this.pickCardAnimation) {
