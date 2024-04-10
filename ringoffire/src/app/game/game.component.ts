@@ -2,13 +2,18 @@ import { GameInfoComponent } from './../game-info/game-info.component';
 import { DialogAddPlayerComponent } from './../dialog-add-player/dialog-add-player.component';
 import { Game } from './../models/game';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit, inject } from '@angular/core';
 import { PlayerComponent } from '../player/player.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
+import { Firestore, collection, onSnapshot, } from '@angular/fire/firestore';
+
+@Injectable({
+  providedIn: 'root',
+})
 
 @Component({
   selector: 'app-game',
@@ -30,12 +35,38 @@ export class GameComponent implements OnInit {
   pickCardAnimation = false;
   game: Game;
   currentCard: string = '';
+  gameDates: Game[] = [];
 
-  constructor(public dialog: MatDialog) {}
+
+  firestore: Firestore = inject(Firestore);
+
+  unsubGame;
+
+
+  constructor(public dialog: MatDialog, private gameObject: Game) {
+  this.unsubGame = this.gameData();
+  }
+
+  ngonDestroy(){
+    this.unsubGame();
+  }
 
   ngOnInit(): void {
     this.newGame();
   }
+
+  gameData() {
+    return onSnapshot(this.getGameRef(), (list) => {
+      list.forEach((element) => {
+        console.log(element)
+      });
+    });
+  }
+
+  getGameRef() {
+    return collection(this.firestore, 'games');
+  }
+
 
   takeCard() {
     if (!this.pickCardAnimation) {
@@ -53,7 +84,6 @@ export class GameComponent implements OnInit {
 
   newGame() {
     this.game = new Game();
-    console.log(this.game);
   }
 
   pushPickedCards(currentCard: string) {

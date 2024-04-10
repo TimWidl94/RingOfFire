@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "ringoffire-f2948": {
+      "hosting": {
+        "ringoffire": [
+          "ringoffire-f2948"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "ringoffire-f2948"
+  }
+}
