@@ -12,6 +12,7 @@ import {
   updateDoc,
   deleteDoc,
   where,
+  collectionData
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { isNgTemplate } from '@angular/compiler';
@@ -23,16 +24,13 @@ export class GameService {
   game: Game[] = [];
 
 
-
   unsubGame;
-
 
   firestore: Firestore = inject(Firestore);
 
   constructor() {
     this.unsubGame = this.subGameList();
   }
-
 
   ngonDestroy() {
     this.subGameList();
@@ -54,37 +52,30 @@ export class GameService {
       stack: obj.stack,
       playedCards: obj.playedCards,
       currentPlayer: obj.currentPlayer,
-      shuffle: obj.shuffle
+
     };
-
   }
-
-
 
   getGamesRef() {
     return collection(this.firestore, 'games');
   }
 
+  async addDoc(item: Game, colId: 'games') {
+    if (colId == 'games') {
+      await addDoc(this.getGamesRef(), item)
+        .catch((err) => {
+          console.error(err);
+        })
+        .then((docRef) => {
+          console.log('Document written with ID: ', docRef);
+        });
+    }
+  }
 
-
-  // async addNote(item: Note, colId: 'notes' | 'trash') {
-    // if (colId == 'notes') {
-      // await addDoc(this.getNotesRef(), item)
-        // .catch((err) => {
-          // console.error(err);
-        // })
-        // .then((docRef) => {
-          // console.log('Document written with ID: ', docRef);
-        // });
-    // } else {
-      // await addDoc(this.getTrashRef(), item);
-    // }
-  // }
-//
   // async deleteNote(colId: 'notes' | 'trash', docId: string) {
-    // console.log(this.getSingleDocRef(colId, docId));
-    // await deleteDoc(this.getSingleDocRef(colId, docId)).catch((err) => {
-      // console.log(err);
-    // });
+  // console.log(this.getSingleDocRef(colId, docId));
+  // await deleteDoc(this.getSingleDocRef(colId, docId)).catch((err) => {
+  // console.log(err);
+  // });
   // }
 }

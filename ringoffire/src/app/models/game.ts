@@ -13,19 +13,21 @@ export class Game {
       this.stack.push('clubs_' + i);
       this.stack.push('diamonds_' + i);
     }
-    this.shuffle(this.stack);
+    shuffle(this.stack);
   }
 
-  // public toJson() {
-    // return {
-      // players: this.players,
-      // stack: this.stack,
-      // playedCards: this.playedCards,
-      // currentPlayer: this.currentPlayer,
-    // };
+// public toJson(){
+  // return {
+    // players: this.players,
+    // stack: this.stack,
+    // playedCards: this.playedCards,
+    // currentPlayer: this.currentPlayer,
   // }
+// }
+}
 
-  shuffle(array: string[]) {
+
+  function shuffle(array: string[]) {
     let currentIndex = array.length;
 
     // While there remain elements to shuffle...
@@ -41,4 +43,8 @@ export class Game {
       ];
     }
   }
-}
+
+  function toJson(){
+
+  }
+

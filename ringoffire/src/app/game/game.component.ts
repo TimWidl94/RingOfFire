@@ -1,3 +1,4 @@
+import { GameService } from './../game-service/game.service';
 import { GameInfoComponent } from './../game-info/game-info.component';
 import { DialogAddPlayerComponent } from './../dialog-add-player/dialog-add-player.component';
 import { Game } from './../models/game';
@@ -9,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
-import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, collection, onSnapshot, } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +36,7 @@ export class GameComponent implements OnInit {
   game: Game;
   currentCard: string = '';
 
-  constructor(public dialog: MatDialog, ) {}
+  constructor(public dialog: MatDialog, private gameService: GameService, private firestore: Firestore) {}
 
   ngOnInit(): void {
     this.newGame();
@@ -44,10 +45,8 @@ export class GameComponent implements OnInit {
   takeCard() {
     if (!this.pickCardAnimation) {
       this.currentCard = this.game.stack.pop()!;
-      console.log('New Card', this.currentCard);
       this.pickCardAnimation = true;
       this.pickNextPlayer();
-      console.log('played Card', this.game.playedCards);
       setTimeout(() => {
         this.pickCardAnimation = false;
         this.pushPickedCards(this.currentCard);
@@ -55,8 +54,18 @@ export class GameComponent implements OnInit {
     }
   }
 
+
+
   newGame() {
     this.game = new Game();
+    // console.log(this.game);
+    let gameObject = {
+      players: this.game.players,
+      stack: this.game.stack,
+      playedCards: this.game.playedCards,
+      currentPlayer: this.game.currentPlayer,
+    };
+    this.gameService.addDoc(gameObject, 'games');
   }
 
   pushPickedCards(currentCard: string) {
