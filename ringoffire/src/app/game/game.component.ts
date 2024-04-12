@@ -3,14 +3,13 @@ import { GameInfoComponent } from './../game-info/game-info.component';
 import { DialogAddPlayerComponent } from './../dialog-add-player/dialog-add-player.component';
 import { Game } from './../models/game';
 import { CommonModule } from '@angular/common';
-import { Component, Injectable, OnInit, inject } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { PlayerComponent } from '../player/player.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
-import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
@@ -40,15 +39,14 @@ export class GameComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private gameService: GameService,
-    private firestore: Firestore,
-    private route:ActivatedRoute,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.newGame();
     this.route.params.subscribe((params) => {
-      console.log('die Params lautet:', params)
-    })
+      console.log('die Params lautet:', params);
+    });
   }
 
   takeCard() {
