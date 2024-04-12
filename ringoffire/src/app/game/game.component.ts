@@ -40,6 +40,7 @@ export class GameComponent implements OnInit {
 
   ngOnInit(): void {
     this.newGame();
+
   }
 
   takeCard() {
@@ -52,6 +53,7 @@ export class GameComponent implements OnInit {
         this.pushPickedCards(this.currentCard);
       }, 1200);
     }
+    this.gameService.updateGame(this.game);
   }
 
 
@@ -60,12 +62,13 @@ export class GameComponent implements OnInit {
     this.game = new Game();
     // console.log(this.game);
     let gameObject = {
+      // id: this.game.id,
       players: this.game.players,
       stack: this.game.stack,
       playedCards: this.game.playedCards,
       currentPlayer: this.game.currentPlayer,
     };
-    this.gameService.addDoc(gameObject, 'games');
+    this.gameService.addDoc(gameObject);
   }
 
   pushPickedCards(currentCard: string) {

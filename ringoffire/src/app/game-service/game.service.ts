@@ -1,28 +1,19 @@
 import { Game } from './../models/game';
-import { Injectable, inject, Component } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   Firestore,
-  query,
-  orderBy,
-  limit,
   collection,
-  doc,
   onSnapshot,
   addDoc,
   updateDoc,
-  deleteDoc,
-  where,
-  collectionData
+  doc,
 } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { isNgTemplate } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
   game: Game[] = [];
-
 
   unsubGame;
 
@@ -48,11 +39,11 @@ export class GameService {
 
   setGameObject(obj: any, id: string): Game {
     return {
-      players: obj.players,
-      stack: obj.stack,
-      playedCards: obj.playedCards,
-      currentPlayer: obj.currentPlayer,
-
+      // id: id || '',
+      players: obj.players || '',
+      stack: obj.stack || '',
+      playedCards: obj.playedCards || '',
+      currentPlayer: obj.currentPlayer || '',
     };
   }
 
@@ -60,22 +51,38 @@ export class GameService {
     return collection(this.firestore, 'games');
   }
 
-  async addDoc(item: Game, colId: 'games') {
-    if (colId == 'games') {
-      await addDoc(this.getGamesRef(), item)
-        .catch((err) => {
-          console.error(err);
-        })
-        .then((docRef) => {
-          console.log('Document written with ID: ', docRef);
-        });
-    }
+  async addDoc(item: Game) {
+    await addDoc(this.getGamesRef(), item)
+      .catch((err) => {
+        console.error(err);
+      })
+      .then((docRef) => {
+        console.log('Document written with ID: ', docRef);
+      });
   }
 
-  // async deleteNote(colId: 'notes' | 'trash', docId: string) {
-  // console.log(this.getSingleDocRef(colId, docId));
-  // await deleteDoc(this.getSingleDocRef(colId, docId)).catch((err) => {
-  // console.log(err);
-  // });
-  // }
+  async updateGame(game: Game) {
+  if (game.id) {
+  let docRef = this.getSingleDocRef("games", game.id);
+  await updateDoc(docRef, this.getCleanJson(game))
+  .catch((err) => {
+  console.log(err);
+  })
+  .then(() => {});
+  }
+  }
+
+  getSingleDocRef(colId: string, docId: string) {
+  return doc(collection(this.firestore, colId), docId);
+  }
+
+  getCleanJson(game:Game){
+  return {
+  // id: game.id,
+  players: game.players,
+  stack: game.stack,
+  playedCards: game.playedCards,
+  currentPlayer: game.currentPlayer,
+  }
+  }
 }
