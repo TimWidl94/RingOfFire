@@ -69,7 +69,7 @@ export class GameComponent implements OnInit {
       playedCards: this.game.playedCards,
       currentPlayer: this.game.currentPlayer,
     };
-    this.gameService.addDoc(gameObject);
+    // this.gameService.addDoc(gameObject);
   }
 
   pushPickedCards(currentCard: string) {
