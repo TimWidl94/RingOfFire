@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -39,11 +40,15 @@ export class GameComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private gameService: GameService,
-    private firestore: Firestore
+    private firestore: Firestore,
+    private route:ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
     this.newGame();
+    this.route.params.subscribe((params) => {
+      console.log('die Params lautet:', params)
+    })
   }
 
   takeCard() {
