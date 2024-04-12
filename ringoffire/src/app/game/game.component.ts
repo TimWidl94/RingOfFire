@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
-import { Firestore, collection, onSnapshot, } from '@angular/fire/firestore';
+import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -36,11 +36,14 @@ export class GameComponent implements OnInit {
   game: Game;
   currentCard: string = '';
 
-  constructor(public dialog: MatDialog, private gameService: GameService, private firestore: Firestore) {}
+  constructor(
+    public dialog: MatDialog,
+    private gameService: GameService,
+    private firestore: Firestore
+  ) {}
 
   ngOnInit(): void {
     this.newGame();
-
   }
 
   takeCard() {
@@ -55,8 +58,6 @@ export class GameComponent implements OnInit {
     }
     this.gameService.updateGame(this.game);
   }
-
-
 
   newGame() {
     this.game = new Game();

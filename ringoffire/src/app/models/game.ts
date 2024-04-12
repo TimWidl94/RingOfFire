@@ -15,35 +15,31 @@ export class Game {
     shuffle(this.stack);
   }
 
-// public toJson(){
+  // public toJson(){
   // return {
-    // players: this.players,
-    // stack: this.stack,
-    // playedCards: this.playedCards,
-    // currentPlayer: this.currentPlayer,
+  // players: this.players,
+  // stack: this.stack,
+  // playedCards: this.playedCards,
+  // currentPlayer: this.currentPlayer,
   // }
-// }
+  // }
 }
 
+function shuffle(array: string[]) {
+  let currentIndex = array.length;
 
-  function shuffle(array: string[]) {
-    let currentIndex = array.length;
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+    // Pick a remaining element...
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
 
-    // While there remain elements to shuffle...
-    while (currentIndex != 0) {
-      // Pick a remaining element...
-      let randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-
-      // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex],
-        array[currentIndex],
-      ];
-    }
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
   }
+}
 
-  function toJson(){
-
-  }
-
+function toJson() {}

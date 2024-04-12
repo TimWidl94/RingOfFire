@@ -62,27 +62,27 @@ export class GameService {
   }
 
   async updateGame(game: Game) {
-  if (game.id) {
-  let docRef = this.getSingleDocRef("games", game.id);
-  await updateDoc(docRef, this.getCleanJson(game))
-  .catch((err) => {
-  console.log(err);
-  })
-  .then(() => {});
-  }
+    if (game.id) {
+      let docRef = this.getSingleDocRef('games', game.id);
+      await updateDoc(docRef, this.getCleanJson(game))
+        .catch((err) => {
+          console.log(err);
+        })
+        .then(() => {});
+    }
   }
 
   getSingleDocRef(colId: string, docId: string) {
-  return doc(collection(this.firestore, colId), docId);
+    return doc(collection(this.firestore, colId), docId);
   }
 
-  getCleanJson(game:Game){
-  return {
-  // id: game.id,
-  players: game.players,
-  stack: game.stack,
-  playedCards: game.playedCards,
-  currentPlayer: game.currentPlayer,
-  }
+  getCleanJson(game: Game) {
+    return {
+      // id: game.id,
+      players: game.players,
+      stack: game.stack,
+      playedCards: game.playedCards,
+      currentPlayer: game.currentPlayer,
+    };
   }
 }

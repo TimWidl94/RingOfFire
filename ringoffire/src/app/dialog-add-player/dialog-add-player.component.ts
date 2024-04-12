@@ -31,9 +31,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 export class DialogAddPlayerComponent {
   name: string = '';
 
-  constructor(private dialog: MatDialog,
-    public dialogRef: MatDialogRef<DialogAddPlayerComponent>,
-  ){}
+  constructor(
+    private dialog: MatDialog,
+    public dialogRef: MatDialogRef<DialogAddPlayerComponent>
+  ) {}
 
   onNoClick() {
     this.dialogRef.close();
