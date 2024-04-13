@@ -73,6 +73,19 @@ export class GameComponent implements OnInit {
   newGame() {
     this.game = new Game();
     // console.log(this.game);
+    let gameObject = {
+      // id: this.game.id,
+      players: this.game.players,
+      stack: this.game.stack,
+      playedCards: this.game.playedCards,
+      currentPlayer: this.game.currentPlayer,
+    };
+    this.gameService.addDoc(gameObject)
+
+    // .then((gameInfo: any)=> {
+      // console.log(gameObject);
+      // this.router.navigateByUrl('/game' + gameInfo);
+    // });
   }
 
   pushPickedCards(currentCard: string) {

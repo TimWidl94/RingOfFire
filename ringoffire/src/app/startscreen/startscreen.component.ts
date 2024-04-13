@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Game } from './../models/game';
 import { GameService } from './../game-service/game.service';
 
+
 @Component({
   selector: 'app-startscreen',
   standalone: true,
@@ -20,7 +21,9 @@ export class StartscreenComponent {
   ) {}
 
   newGame() {
-    let game = new Game();
+    this.router.navigateByUrl('/game');
+
+    // let game = new Game();
     // let gameObject = {
       // id: this.game.id,
       // players: game.players,
