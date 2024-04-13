@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { Firestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +36,7 @@ export class GameComponent implements OnInit {
   pickCardAnimation = false;
   game: Game;
   currentCard: string = '';
+  gameId: string;
 
   constructor(
     public dialog: MatDialog,
@@ -46,6 +48,12 @@ export class GameComponent implements OnInit {
     this.newGame();
     this.route.params.subscribe((params) => {
       console.log('die Params lautet:', params);
+      // this.gameId = params.id;
+      // this.gameService.firestore.collection('games')
+      // .doc(params['id']).valueChanges().
+      // subscribe((game:any) => {
+      // console.log('game update', game)
+      // })
     });
   }
 
@@ -65,14 +73,6 @@ export class GameComponent implements OnInit {
   newGame() {
     this.game = new Game();
     // console.log(this.game);
-    let gameObject = {
-      // id: this.game.id,
-      players: this.game.players,
-      stack: this.game.stack,
-      playedCards: this.game.playedCards,
-      currentPlayer: this.game.currentPlayer,
-    };
-    // this.gameService.addDoc(gameObject);
   }
 
   pushPickedCards(currentCard: string) {
