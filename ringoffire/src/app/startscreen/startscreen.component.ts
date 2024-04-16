@@ -1,10 +1,8 @@
-import { routes } from './../app.routes';
 import { Component } from '@angular/core';
-import { Firestore } from '@angular/fire/firestore';
+import { Firestore, addDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Game } from './../models/game';
 import { GameService } from './../game-service/game.service';
-
 
 @Component({
   selector: 'app-startscreen',
@@ -14,26 +12,31 @@ import { GameService } from './../game-service/game.service';
   styleUrl: './startscreen.component.scss',
 })
 export class StartscreenComponent {
-  constructor(
-    private router: Router,
-    private firestore: Firestore,
-    private gameService: GameService
-  ) {}
+  constructor(private router: Router, private gameService: GameService) {}
 
-  newGame() {
-    this.router.navigateByUrl('/game');
+  game: Game;
+  gameObject: Game;
+  gameInfo: string;
 
-    // let game = new Game();
+  async newGame() {
+    let game = new Game();
     // let gameObject = {
-      // id: this.game.id,
-      // players: game.players,
-      // stack: game.stack,
-      // playedCards: game.playedCards,
-      // currentPlayer: game.currentPlayer,
+    // id: game.id,
+    // players: game.players,
+    // stack: game.stack,
+    // playedCards: game.playedCards,
+    // currentPlayer: game.currentPlayer,
     // };
-    // this.gameService.addDoc(gameObject).then((gameInfo: any)=> {
-      // console.log(gameObject);
-      // this.router.navigateByUrl('/game' + gameInfo);
+
+    let gameInfo = await addDoc(this.gameService.getGamesRef(), {
+      game: this.gameService.getCleanJson(game),
+    });
+    console.log('gameInfo', gameInfo);
+    this.router.navigateByUrl('/game/:' + gameInfo.id);
+
+    // this.gameService.addGame(this.gameObject).then((gameObject: any)=> {
+    // console.log(gameObject);
+
     // });
   }
 }

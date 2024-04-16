@@ -15,13 +15,14 @@ export class Game {
     shuffle(this.stack);
   }
 
-  // public toJson(){
-  // return {
-  // players: this.players,
-  // stack: this.stack,
-  // playedCards: this.playedCards,
-  // currentPlayer: this.currentPlayer,
-  // }
+  // public toJson() {
+  //   return {
+  //     id: this.id,
+  //     players: this.players,
+  //     stack: this.stack,
+  //     playedCards: this.playedCards,
+  //     currentPlayer: this.currentPlayer,
+  //   };
   // }
 }
 

@@ -3,7 +3,7 @@ import { GameInfoComponent } from './../game-info/game-info.component';
 import { DialogAddPlayerComponent } from './../dialog-add-player/dialog-add-player.component';
 import { Game } from './../models/game';
 import { CommonModule } from '@angular/common';
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit, inject } from '@angular/core';
 import { PlayerComponent } from '../player/player.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,6 +12,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Firestore } from '@angular/fire/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +39,8 @@ export class GameComponent implements OnInit {
   currentCard: string = '';
   gameId: string;
 
+  firestore: Firestore = inject(Firestore);
+
   constructor(
     public dialog: MatDialog,
     private gameService: GameService,
@@ -47,8 +50,12 @@ export class GameComponent implements OnInit {
   ngOnInit(): void {
     this.newGame();
     this.route.params.subscribe((params) => {
-      console.log('die Params lautet:', params);
-      // this.gameId = params.id;
+      console.log('die Params lautet:', params['id']);
+
+      let gameId = params['id'].replace(':', '');
+      this.gameId = gameId;
+      console.log('gameID =', this.gameId);
+
       // this.gameService.firestore.collection('games')
       // .doc(params['id']).valueChanges().
       // subscribe((game:any) => {
@@ -67,25 +74,21 @@ export class GameComponent implements OnInit {
         this.pushPickedCards(this.currentCard);
       }, 1200);
     }
-    this.gameService.updateGame(this.game);
+    this.gameService.updateGame(this.game, this.gameId);
+    console.log('das Game ist :', this.game);
+    console.log('die Game Id lautet:', this.gameId);
   }
 
   newGame() {
     this.game = new Game();
-    // console.log(this.game);
-    let gameObject = {
-      // id: this.game.id,
-      players: this.game.players,
-      stack: this.game.stack,
-      playedCards: this.game.playedCards,
-      currentPlayer: this.game.currentPlayer,
-    };
-    this.gameService.addDoc(gameObject)
-
-    // .then((gameInfo: any)=> {
-      // console.log(gameObject);
-      // this.router.navigateByUrl('/game' + gameInfo);
-    // });
+    // let gameObject = {
+    // id: this.game.id,
+    // players: this.game.players,
+    // stack: this.game.stack,
+    // playedCards: this.game.playedCards,
+    // currentPlayer: this.game.currentPlayer,
+    // };
+    // this.gameService.addGame(gameObject)
   }
 
   pushPickedCards(currentCard: string) {

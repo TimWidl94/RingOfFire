@@ -8,18 +8,21 @@ import {
   updateDoc,
   doc,
 } from '@angular/fire/firestore';
+import { GameComponent } from '../game/game.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
   game: Game[] = [];
+  gameObject: Game[] = [];
 
   unsubGame;
 
   firestore: Firestore = inject(Firestore);
 
-  constructor() {
+  constructor(
+  ) {
     this.unsubGame = this.subGameList();
   }
 
@@ -31,19 +34,22 @@ export class GameService {
     return onSnapshot(this.getGamesRef(), (list) => {
       this.game = [];
       list.forEach((element) => {
-        this.game.push(this.setGameObject(element.data(), element.id));
+        this.gameObject.push(this.setGameObject(element.data(), element.id));
+        console.log('Snapshot Data', this.gameObject);
+        if(element.id){
+          console.log('id gefunden')
+        }
       });
-      console.log(this.game);
     });
   }
 
   setGameObject(obj: any, id: string): Game {
     return {
-      // id: id || '',
+      id: id || '',
       players: obj.players || '',
       stack: obj.stack || '',
       playedCards: obj.playedCards || '',
-      currentPlayer: obj.currentPlayer || '',
+      currentPlayer: obj.currentPlayer || 0,
     };
   }
 
@@ -51,8 +57,8 @@ export class GameService {
     return collection(this.firestore, 'games');
   }
 
-  async addDoc(item: Game) {
-    await addDoc(this.getGamesRef(), item)
+  async addGame(game: Game) {
+    await addDoc(this.getGamesRef(), this.getCleanJson(game))
       .catch((err) => {
         console.error(err);
       })
@@ -61,9 +67,9 @@ export class GameService {
       });
   }
 
-  async updateGame(game: Game) {
-    if (game.id) {
-      let docRef = this.getSingleDocRef('games', game.id);
+  async updateGame(game: Game, gameId: string) {
+    if (gameId) {
+      let docRef = this.getSingleDocRef('games', gameId);
       await updateDoc(docRef, this.getCleanJson(game))
         .catch((err) => {
           console.log(err);
@@ -78,7 +84,7 @@ export class GameService {
 
   getCleanJson(game: Game) {
     return {
-      // id: game.id,
+      id: game.id,
       players: game.players,
       stack: game.stack,
       playedCards: game.playedCards,
