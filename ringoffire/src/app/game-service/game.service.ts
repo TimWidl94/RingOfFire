@@ -37,7 +37,7 @@ export class GameService {
         this.gameObject.push(this.setGameObject(element.data(), element.id));
         console.log('Snapshot Data', this.gameObject);
         if(element.id){
-          console.log('id gefunden')
+          console.log('id gefunden', element.id)
         }
       });
     });
@@ -58,7 +58,7 @@ export class GameService {
   }
 
   async addGame(game: Game) {
-    await addDoc(this.getGamesRef(), this.getCleanJson(game))
+    await addDoc(this.getGamesRef(), game)
       .catch((err) => {
         console.error(err);
       })

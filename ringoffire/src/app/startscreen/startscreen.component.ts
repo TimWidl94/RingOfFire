@@ -20,17 +20,15 @@ export class StartscreenComponent {
 
   async newGame() {
     let game = new Game();
-    // let gameObject = {
-    // id: game.id,
-    // players: game.players,
-    // stack: game.stack,
-    // playedCards: game.playedCards,
-    // currentPlayer: game.currentPlayer,
-    // };
+    let gameObject = {
+      id: game.id,
+      players: game.players,
+      stack: game.stack,
+      playedCards: game.playedCards,
+      currentPlayer: game.currentPlayer,
+    };
 
-    let gameInfo = await addDoc(this.gameService.getGamesRef(), {
-      game: this.gameService.getCleanJson(game),
-    });
+    let gameInfo = await addDoc(this.gameService.getGamesRef(), gameObject);
     console.log('gameInfo', gameInfo);
     this.router.navigateByUrl('/game/:' + gameInfo.id);
 
