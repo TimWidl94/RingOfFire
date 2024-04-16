@@ -56,7 +56,6 @@ export class GameComponent implements OnInit {
       this.gameId = gameId;
       console.log('gameID =', this.gameId);
 
-
       // this.gameService.firestore.collection('games')
       // .doc(params['id']).valueChanges().
       // subscribe((game:any) => {
@@ -102,6 +101,7 @@ export class GameComponent implements OnInit {
     dialogRef.afterClosed().subscribe((name: string) => {
       if (name && name.length >= 0) {
         this.game.players.push(name);
+        this.gameService.updateGame(this.game, this.gameId);
       }
     });
   }
@@ -110,5 +110,6 @@ export class GameComponent implements OnInit {
     this.game.currentPlayer++;
     this.game.currentPlayer =
       this.game.currentPlayer % this.game.players.length;
+    this.gameService.updateGame(this.game, this.gameId);
   }
 }
