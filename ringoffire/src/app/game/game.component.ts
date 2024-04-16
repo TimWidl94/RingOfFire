@@ -56,6 +56,7 @@ export class GameComponent implements OnInit {
       this.gameId = gameId;
       console.log('gameID =', this.gameId);
 
+
       // this.gameService.firestore.collection('games')
       // .doc(params['id']).valueChanges().
       // subscribe((game:any) => {
