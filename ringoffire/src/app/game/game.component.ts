@@ -102,9 +102,12 @@ export class GameComponent implements OnInit {
     dialogRef.afterClosed().subscribe((name: string) => {
       if (name && name.length >= 0) {
         this.game.players.push(name);
-        this.gameService.updateGame(this.game, this.gameId);
-      }
+        console.log('hat geklappt', this.game)
+      } else{ console.log('hat nicht geklappt')};
+      this.gameService.updateGame(this.game, this.gameId);
     });
+
+
   }
 
   pickNextPlayer() {

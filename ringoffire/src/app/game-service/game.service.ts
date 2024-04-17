@@ -23,9 +23,7 @@ export class GameService {
 
   firestore: Firestore = inject(Firestore);
 
-  constructor(
-    private route: ActivatedRoute,
-  ) {
+  constructor(private route: ActivatedRoute) {
     this.unsubGame = this.subGameList();
   }
 
@@ -38,9 +36,7 @@ export class GameService {
       this.game = [];
       list.forEach((element) => {
         this.gameObject.push(this.setGameObject(element.data(), element.id));
-        // console.log('Snapshot Data', this.gameObject);
-        if(element.id){
-          // console.log('id gefunden', element.id)
+        if (element.id) {
         }
       });
     });
@@ -67,9 +63,7 @@ export class GameService {
       .catch((err) => {
         console.error(err);
       })
-      .then((docRef) => {
-        // console.log('Document written with ID: ', docRef);
-      });
+      .then((docRef) => {});
   }
 
   async updateGame(game: Game, gameId: string) {
@@ -79,7 +73,7 @@ export class GameService {
         .catch((err) => {
           console.log(err);
         })
-        .then(() => {});
+        .then(() => {console.log('updated version', game)});
     }
   }
 

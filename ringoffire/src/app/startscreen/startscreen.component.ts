@@ -31,10 +31,5 @@ export class StartscreenComponent {
     let gameInfo = await addDoc(this.gameService.getGamesRef(), gameObject);
     console.log('gameInfo', gameInfo);
     this.router.navigateByUrl('/game/' + gameInfo.id);
-
-    // this.gameService.addGame(this.gameObject).then((gameObject: any)=> {
-    // console.log(gameObject);
-
-    // });
   }
 }

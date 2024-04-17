@@ -4,7 +4,7 @@ export class Game {
   public stack: string[] = [];
   public playedCards: string[] = [];
   public currentPlayer: number = 0;
-  public pickCardAnimation = false;
+  public pickCardAnimation: boolean = false;
   public currentCard: string = '';
 
   constructor() {
@@ -16,16 +16,6 @@ export class Game {
     }
     shuffle(this.stack);
   }
-
-  // public toJson() {
-  //   return {
-  //     id: this.id,
-  //     players: this.players,
-  //     stack: this.stack,
-  //     playedCards: this.playedCards,
-  //     currentPlayer: this.currentPlayer,
-  //   };
-  // }
 }
 
 function shuffle(array: string[]) {
@@ -44,5 +34,3 @@ function shuffle(array: string[]) {
     ];
   }
 }
-
-function toJson() {}
