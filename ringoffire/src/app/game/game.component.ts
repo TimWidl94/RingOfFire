@@ -34,7 +34,6 @@ import { doc, onSnapshot } from 'firebase/firestore';
   styleUrl: './game.component.scss',
 })
 export class GameComponent implements OnInit {
-
   game: Game;
 
   gameId: string;
@@ -62,7 +61,7 @@ export class GameComponent implements OnInit {
           this.game.playedCards = game['playedCards'];
           this.game.players = game['players'];
           this.game.stack = game['stack'];
-          this.game.pickCardAnimation = game['pickCardAnimtion'];
+          this.game.pickCardAnimation = game['pickCardAnimation'];
           this.game.currentCard = game['currentCard'];
         }
       });
