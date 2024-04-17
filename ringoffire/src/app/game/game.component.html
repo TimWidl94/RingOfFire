@@ -32,16 +32,16 @@
     <!-- Animated Card -->
     <img
       (click)="takeCard()"
-      *ngIf="pickCardAnimation"
+      *ngIf="game.pickCardAnimation"
       class="pickCard"
       style="right: 25px"
-      src="./assets/cards/{{ currentCard }}.png"
+      src="./assets/cards/{{ game.currentCard }}.png"
       alt=""
     />
   </div>
 </section>
 
-<app-game-info [card]="currentCard" class="pinBottom"></app-game-info>
+<app-game-info [card]="game.currentCard" class="pinBottom"></app-game-info>
 
 <button mat-fab color="primary" class="addButton" (click)="openDialog()">
   <mat-icon>add</mat-icon>

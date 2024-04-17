@@ -9,6 +9,7 @@ import {
   doc,
 } from '@angular/fire/firestore';
 import { GameComponent } from '../game/game.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -16,12 +17,14 @@ import { GameComponent } from '../game/game.component';
 export class GameService {
   game: Game[] = [];
   gameObject: Game[] = [];
+  gameId: string;
 
   unsubGame;
 
   firestore: Firestore = inject(Firestore);
 
   constructor(
+    private route: ActivatedRoute,
   ) {
     this.unsubGame = this.subGameList();
   }
@@ -35,9 +38,9 @@ export class GameService {
       this.game = [];
       list.forEach((element) => {
         this.gameObject.push(this.setGameObject(element.data(), element.id));
-        console.log('Snapshot Data', this.gameObject);
+        // console.log('Snapshot Data', this.gameObject);
         if(element.id){
-          console.log('id gefunden', element.id)
+          // console.log('id gefunden', element.id)
         }
       });
     });
@@ -50,6 +53,8 @@ export class GameService {
       stack: obj.stack || '',
       playedCards: obj.playedCards || '',
       currentPlayer: obj.currentPlayer || 0,
+      pickCardAnimation: obj.pickCardnAnimation,
+      currentCard: obj.currentCard,
     };
   }
 
@@ -63,7 +68,7 @@ export class GameService {
         console.error(err);
       })
       .then((docRef) => {
-        console.log('Document written with ID: ', docRef);
+        // console.log('Document written with ID: ', docRef);
       });
   }
 
@@ -89,6 +94,8 @@ export class GameService {
       stack: game.stack,
       playedCards: game.playedCards,
       currentPlayer: game.currentPlayer,
+      pickCardAnimation: game.pickCardAnimation,
+      currentCard: game.currentCard,
     };
   }
 }
